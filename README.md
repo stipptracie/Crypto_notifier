@@ -1,3 +1,3 @@
-# Project_1_FINTECH_Crypto_notifier
+# Crypto_notifier
 
-Planning doc: 
+[Planning doc](https://docs.google.com/document/d/1rUZfldYmy9Eqa9YMD0Sh2NcjxjiFe94NhCzngBFl1-c/edit)
