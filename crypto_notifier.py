@@ -7,6 +7,7 @@ import os
 import alpaca_trade_api as tradeapi
 from dotenv import load_dotenv
 import questionary
+import twilio
 
 # Load .env file
 load_dotenv()
@@ -15,6 +16,19 @@ load_dotenv()
 alpaca_api_key = os.getenv("ALPACA_API_KEY")
 alpaca_secret_key = os.getenv("ALPACA_SECRET_KEY")
 
+# Define code for ticker
+def get_tickers():
+    tickers = []
+    return tickers
+
+# Define code for alpaca 
+# create rest api
+# 
+def get_user_number():
+    return phone_number
+# Define code for Twilio message
+def generate_twilio_message():
+    return message
 
 
 
