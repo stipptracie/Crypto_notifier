@@ -21,16 +21,25 @@ def get_tickers():
     tickers = []
     return tickers
 
-# Define code for alpaca 
+# Define code for alpaca to get what a big swing is
 # create rest api
-# 
+# what is ave % increase threshold by comparing x time in the past generate average daily return swing
+# put user two weeks back and compare each day 
+# if day has a big swing send message 
+# if after two weeks send message no big swings
+#
+
 def get_user_number():
     return phone_number
+
 # Define code for Twilio message
 def generate_twilio_message():
+    # notify when big swing
+    # two parts if big swing
+    # if no big
     return message
 
-
+if __name__ == "__main__":
 
 
 
