@@ -7,7 +7,8 @@ import os
 import alpaca_trade_api as tradeapi
 from dotenv import load_dotenv
 import questionary
-import twilio
+from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 
 # Load .env file
 load_dotenv()
@@ -32,14 +33,50 @@ def get_tickers():
 def get_user_number():
     return phone_number
 
+
+
+
+
 # Define code for Twilio message
-def generate_twilio_message():
-    # notify when big swing
-    # two parts if big swing
-    # if no big
+# Set up twilio client
+# Create twilio id and tolken for use in sdk
+twilio_account_id = os.environ["TWILIO_ACCOUNT_ID"]
+twilio_token = os.environ["TWILIO_AUTH_TOKEN"]
+twilio_phone_number = os.environ["TWILIO_PHONE_NUMBER"]
+
+# Create twilio rest client 
+client = Client(twilio_account_id, twilio_token)
+
+# Define generate twilio message
+def generate_twilio_message(phone_number, twilio_phone_number, information):
+    try:
+        message = client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
+                                    body=information)
+    # Implement your fallback code
+    except TwilioRestException as e:
+        print(e)
     return message
 
 if __name__ == "__main__":
+    # Create conditional to pass information into message
+    # Will need two dataframes, one with last two weeks of daily percent changes
+    # Dataframe for comparing 
+    # create empty list of strings to house text message
+    # could create a dictionary for each day in the last two weeks day: ticker, true/false and use 
+    # if dictionary[1] == True:
+    #   message_list.append(day, ticker)
+    """message_list = []"""
+    """for row in daily_pct_change_df:
+            for symbol in ticker_list:
+                if float(daily_percent_change_df[symbol]) >= threshold_value:
+                    information_to_send = f"There was a big price swing on {daily_pct_change.index} for {symbol} \n"
+                    message_list.append(information)
+                else: 
+                    pass        
+    """
+    # Generate message with list of strings
+    """generate_twilio_message(phone_number, twilio_phone_number, message_list)"""
+    
 
 
 
