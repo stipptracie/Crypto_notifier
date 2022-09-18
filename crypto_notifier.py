@@ -20,6 +20,10 @@ alpaca_secret_key = os.getenv("ALPACA_SECRET_KEY")
 # Define code for ticker
 def get_tickers():
     tickers = []
+    tickers = questionary.checkbox(
+        "Select CryptoCurrencies",
+        choices=["BTC","ETH","XRP","ADA", "SOL"
+        ]).ask()
     return tickers
 
 # Define code for alpaca to get what a big swing is
@@ -28,6 +32,7 @@ def get_tickers():
 
 
 def get_user_number():
+    phone_number = questionary.text("What is your phone number?:").ask()
     return phone_number
 
 
