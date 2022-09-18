@@ -32,6 +32,7 @@ def get_tickers():
 
 
 def get_user_number():
+    phone_number = []
     phone_number = questionary.text("What is your phone number?:").ask()
     return phone_number
 
