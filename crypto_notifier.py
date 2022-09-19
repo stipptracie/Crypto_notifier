@@ -2,6 +2,7 @@
 
 # Import modules
 
+from hmac import compare_digest
 import pandas as pd
 import os
 import numpy as np
@@ -77,8 +78,8 @@ if __name__ == "__main__":
         daily_pct = cg.get_price(ids=f'{ticker}', vs_currencies='usd',include_24hr_change='true')
         daily_pct_df = pd.DataFrame(daily_pct)
         daily_pct_df.T
-        
-        if np.absolute(daily_pct_df.loc[:, 'usd_24h_change']) >= (swing_thresholds_df.loc[ticker])*100:
+        compare_value = np.absolute(daily_pct_df.loc[:, 'usd_24h_change'])
+        if compare_value[0] >= (swing_thresholds_df.loc[ticker])*100:
             information_to_send = f"There was a big price swing for {ticker} today compared to the last three years worth of daily changes \n"
             message_list.append(information_to_send)
             
