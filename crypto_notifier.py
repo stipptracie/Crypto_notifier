@@ -18,13 +18,13 @@ alpaca_api_key = os.getenv("ALPACA_API_KEY")
 alpaca_secret_key = os.getenv("ALPACA_SECRET_KEY")
 
 # Define code for ticker
-def get_tickers():
-    tickers = []
-    tickers = questionary.checkbox(
+def get_symbols():
+    symbols = []
+    symbols = questionary.checkbox(
         "Select CryptoCurrencies",
-        choices=["BTC","ETH","XRP","ADA", "SOL"
+        choices=["bitcoin","ethereum","ripple","cardano", "solana"
         ]).ask()
-    return tickers
+    return symbols
 
 # Define code for alpaca to get what a big swing is
 # create rest api
