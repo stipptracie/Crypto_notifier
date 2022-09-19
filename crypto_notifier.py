@@ -2,7 +2,6 @@
 
 # Import modules
 
-from hmac import compare_digest
 import pandas as pd
 import os
 import numpy as np
@@ -12,7 +11,7 @@ from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 from dotenv import load_dotenv
 
-load_dotenv
+load_dotenv()
 
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
@@ -56,12 +55,12 @@ client = Client(twilio_account_id, twilio_token)
 # Define generate twilio message
 def generate_twilio_message(phone_number, twilio_phone_number, information):
     try:
-        message = client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
+        client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
                                     body=information)
     # Implement your fallback code
     except TwilioRestException as e:
         print(e)
-    return message
+
 
 if __name__ == "__main__":
     # User input phone number to variable
@@ -77,15 +76,18 @@ if __name__ == "__main__":
     for ticker in user_tickers:   
         daily_pct = cg.get_price(ids=f'{ticker}', vs_currencies='usd',include_24hr_change='true')
         daily_pct_df = pd.DataFrame(daily_pct)
-        daily_pct_df.T
+        daily_pct_df = daily_pct_df.T
         compare_value = np.absolute(daily_pct_df.loc[:, 'usd_24h_change'])
-        if compare_value[0] >= (swing_thresholds_df.loc[ticker])*100:
+        if compare_value[0] >= float((swing_thresholds_df.loc[ticker][0]))*100:
             information_to_send = f"There was a big price swing for {ticker} today compared to the last three years worth of daily changes \n"
             message_list.append(information_to_send)
+        else:
+            no_big_swing = f'There was no significant price swing for {ticker} from yesterday compared to the last three years worth of daily changes'
+            message_list.append(no_big_swing)
             
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
-    print(f"A message has been sent to you phone with a two week summary report for {user_tickers}")
+    print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_tickers}")
     
 
     
