@@ -3,6 +3,7 @@
 # Import modules
 
 import pandas as pd
+import os
 import numpy as np
 from pycoingecko import CoinGeckoAPI
 import questionary
