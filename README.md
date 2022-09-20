@@ -84,6 +84,29 @@ These peices of information need to be stored in a **.env** file that is saved i
 
 > "TWILIO_PHONE_NUMBER" = 'YOUR TWILIO PHONE NUMBER HERE'
 
+Once the **.env** file has been created with an active Twilio phone number and credentials everything should be set up to run the application.
+
+To run the application first activate the conda environment associated with the necessary packages and libraries. Navigate to this application's folder repo and run the application with the following commands:
+
+```python
+    conda activate myenv
+    cd Crypto_notifer
+    python crypto_notifer.py
+```
+
+This will prompt the user to enter their 10 digit phone number:
+
+![prompt](images/initial_prompt.png)
+
+After entering a phone number the user will be given a choice of 5 crypto currencies to choose from 
+
+![choices](images/crypto_options.png)
+
+To select multiple cryptocurrencies for analysis the user must use the SPACE bar to highlight multiple currencies then press ENTER to advance through the program.
+
+The final display will show:
+
+
 ---
 
 ## Highlights:
