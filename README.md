@@ -49,9 +49,40 @@ First check that all of the anaconda associated packages have been installed by 
     conda list pandas
 ```
 
+Next the packages not included need to be installed and this can be accomplished by entering the following in the Git Bash terminal.
+
+```python
+    pip install questionary
+    pip install python-dotenv
+    pip install -U pycoingecko
+    pip install twilio
+```
+
+To check that all of the dependencies have been installed by entering the following into the Git Bash Terminal:
+
+```python
+    conda list questionary
+    conda list dotenv
+    conda list pycoingecko
+    conda list twilio
+```
+
+With all of these packages the conda environment should be set up to run the Crypto Notifier application
+
 ---
 
 ## Usage
+
+Prior to running the application it is necessary to create a Twilio Account. Sign up at [https://www.twilio.com/](https://www.twilio.com/)
+
+There are 3 important pieces of information that need to be retrieved: the Twilio phone number associated with your account, the Twilio account ID and the Twilio authentication token.
+
+These peices of information need to be stored in a **.env** file that is saved in the same repo as this application. The information needs to look like the following:
+> "TWILIO_ACCOUNT_ID" = 'YOUR ACCOUNT ID HERE'
+
+> "TWILIO_AUTH_TOKEN" = 'YOUR AUTHENTICATION TOKEN HERE'
+
+> "TWILIO_PHONE_NUMBER" = 'YOUR TWILIO PHONE NUMBER HERE'
 
 ---
 
@@ -77,4 +108,3 @@ Created by Ben Spiegel, Silvano Ross and Tracy Stipp while in the UW FinTech Boo
 
 ---
 
----
