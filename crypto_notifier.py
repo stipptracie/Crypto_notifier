@@ -37,20 +37,20 @@ def get_symbols():
 # if day has a big swing send message 
 # if after two weeks send message no big swings
 #
-def get_tickers():
-    tickers = []
-    tickers = questionary.checkbox(
+def get_symbols():
+    symbols = []
+    symbols = questionary.checkbox(
         "Select CryptoCurrencies",
         choices=["bitcoin","ethereum","ripple","cardano", "solana"]
     ).ask()
 
-return tickers
+    return symbols
 
 
 def get_user_number():
     phone_number = []
     phone_number = questionary.text("What is your 10 digit phone number?:").ask()
-return phone_number
+    return phone_number
 
 
 
@@ -79,27 +79,27 @@ if __name__ == "__main__":
     user_phone_number = get_user_number()
     
     # User input tickers to variable
-    user_tickers = get_tickers()
+    user_symbols = get_symbols()
 
     # Create conditional to pass information into message
     # Create empty message list to house information
     message_list = []
     
-    for ticker in user_tickers:   
-        daily_pct = cg.get_price(ids=f'{ticker}', vs_currencies='usd',include_24hr_change='true')
+    for symbol in user_symbols:   
+        daily_pct = cg.get_price(ids=f'{symbol}', vs_currencies='usd',include_24hr_change='true')
         daily_pct_df = pd.DataFrame(daily_pct)
         daily_pct_df = daily_pct_df.T
         compare_value = np.absolute(daily_pct_df.loc[:, 'usd_24h_change'])
-        if compare_value[0] >= float((swing_thresholds_df.loc[ticker][0]))*100:
-            information_to_send = f"There was a big price swing for {ticker} today compared to the last three years worth of daily changes \n"
+        if compare_value[0] >= float((swing_thresholds_df.loc[symbol][0]))*100:
+            information_to_send = f"There was a big price swing for {symbol} today compared to the last three years worth of daily changes \n"
             message_list.append(information_to_send)
         else:
-            no_big_swing = f'There was no significant price swing for {ticker} from yesterday compared to the last three years worth of daily changes'
+            no_big_swing = f'There was no significant price swing for {symbol} from yesterday compared to the last three years worth of daily changes'
             message_list.append(no_big_swing)
             
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
-    print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_tickers}")
+    print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_symbols}")
     
 
     
