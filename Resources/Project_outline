@@ -1,0 +1,72 @@
+Title- Crypto Notifier 
+
+Team- Ben, Silvano, Tracie. 
+
+Description- An application that will alert the user via text message to large swings in the prices of popular cryptocurrencies (possible visual component, link to plots etc…)
+
+Maybe the user can set inputs for how large of a price change will trigger a text.
+Maybe some regularly scheduled text updates? (daily)
+
+Research Questions- Which API to use?
+
+How to run a program that uses ‘live’ updates. - pd.timestamp of now 
+	
+Top 5 most popular coins? BTC, ETH, ADA, XRP, SOL (potentially add api-coinmarketcap to pick top 5)
+
+Libraries needed. (Voila, Twilio?, hvplots, pandas, fire and questionary) 
+
+User Interface
+
+Select which currency from list of top x currencies or entered currency
+
+Select the parameters like when a price drops or raises by x percent 
+
+Would have to include try/catch blocks for user input
+
+Would need str.upper(), maybe even max length,  
+
+
+Cryptocurrency notifier
+
+Sends text to a user inputted phone number - twillio
+
+Maybe - allows user to update phone number, 
+
+
+Other parameters, features
+
+Graph send - of overlay of selected tickers
+
+Different metrics to possibly include: risk, predicted cumulative returns if investing now
+
+
+Cryptocurrency data repo
+
+Different SDK than Alpaca - Yahoo Finance, Google Finance, Coinbase, other
+
+Pulls data immediately / every x minutes/hours when software up and running
+Would need every input to be a parameter
+
+
+Data Sets- Data from API, price, time, daily % change, Spot in the top X?, 
+
+
+Rough Tasks- 
+
+Import Data(Alpaca API)
+Clean Data(What data do we need and not need?) 
+Maybe user sets parameters, %change etc…
+Analyze Data
+Visualize Data
+Send Data to User
+
+Detailed README, with examples. 
+
+MVP 
+User enters phone number
+Allow user to pick from top 5 cryptocurrencies
+Texts user crypto, price and percent change
+
+Pull data from about a year to define what a huge swing is, average swing prices
+
+put user about two weeks ago and notify if there was a date where a big price change happened
