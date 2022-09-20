@@ -21,10 +21,7 @@ crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','sola
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
 
-<<<<<<< HEAD
-#two_week_daily_pct_change_df = # @TODO #
 
-<<<<<<< HEAD
 # Define code for ticker
 def get_symbols():
     symbols = []
@@ -34,12 +31,7 @@ def get_symbols():
         ]).ask()
     return symbols
 
-# Define code for alpaca to get what a big swing is
-# create rest api
-# what is ave % increase threshold by comparing x time in the past generate average daily return swing
-=======
-=======
->>>>>>> 21e66b9d7cc995a8c259780b55b810548c7bb522
+
 # what is ave % increase threshold by comparing x time in the past generate average daily return swing
 # put user two weeks back and compare each day 
 # if day has a big swing send message 
@@ -51,18 +43,14 @@ def get_tickers():
         "Select CryptoCurrencies",
         choices=["bitcoin","ethereum","ripple","cardano", "solana"]
     ).ask()
-<<<<<<< HEAD
+
 return tickers
->>>>>>> 3bad08162160f8db09477e290193ba5271a91537
-=======
-    return tickers
->>>>>>> 21e66b9d7cc995a8c259780b55b810548c7bb522
 
 
 def get_user_number():
     phone_number = []
     phone_number = questionary.text("What is your 10 digit phone number?:").ask()
-    return phone_number
+return phone_number
 
 
 
