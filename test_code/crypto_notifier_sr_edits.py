@@ -2,7 +2,6 @@
 
 # Import modules
 import pandas as pd
-#import sqlalchemy as sql
 import os
 import alpaca_trade_api as tradeapi
 from dotenv import load_dotenv
@@ -13,9 +12,6 @@ from twilio.base.exceptions import TwilioRestException
 # Load .env file
 load_dotenv()
 
-# Set the variables for the Alpaca API and secret keys
-alpaca_api_key = os.getenv("ALPACA_API_KEY")
-alpaca_secret_key = os.getenv("ALPACA_SECRET_KEY")
 
 # Define code for ticker
 def get_tickers():
@@ -57,7 +53,24 @@ def generate_twilio_message(phone_number, twilio_phone_number, information):
         print(e)
     return message
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
+    # User input phone number to variable
+    user_phone_number = get_user_number()
+    
+    # User input tickers to variable
+    user_tickers = get_tickers()
+    
+    # Generate threshold df
+    for ticker in user_tickers:
+        # run through coingecko to generate concatenated df of threshold values
+        swing_thresholds_df = # @TODO #
+    
+    # Generate df for each ticker for the last two weeks
+    for ticker in user_tickers:
+        two_week_daily_pct_change_df = # @TODO #
+        
+    
+    
     # Create conditional to pass information into message
     # Will need two dataframes, one with last two weeks of daily percent changes
     # Dataframe for comparing 
@@ -65,17 +78,21 @@ if __name__ == "__main__":
     # could create a dictionary for each day in the last two weeks day: ticker, true/false and use 
     # if dictionary[1] == True:
     #   message_list.append(day, ticker)
-    """message_list = []"""
-    """for row in daily_pct_change_df:
-            for symbol in ticker_list:
-                if float(daily_percent_change_df[symbol]) >= threshold_value:
-                    information_to_send = f"There was a big price swing on {daily_pct_change.index} for {symbol} \n"
-                    message_list.append(information)
+    message_list = []
+    
+    for row in two_week_daily_pct_change_df:
+            for symbol in user_tickers:
+                if float(row[symbol]) >= float(swing_thresholds_df[symbol]):
+                    information_to_send = f"There was a big price swing on {row.index} for {symbol} \n"
+                    message_list.append(information_to_send)
                 else: 
-                    pass        
-    """
+                    no_swing = f"There was no big price changes for {symbol} in the last two weeks"
+                    message_list.append(no_swing)        
+    
     # Generate message with list of strings
-    """generate_twilio_message(phone_number, twilio_phone_number, message_list)"""
+    generate_twilio_message(phone_number, twilio_phone_number, message_list)
+    
+    print(f"A message has been sent to you phone with a two week summary report for {user_tickers}")
     
 
 
