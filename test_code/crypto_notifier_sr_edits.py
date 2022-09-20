@@ -16,7 +16,7 @@ load_dotenv()
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
 
-#Dataframe for swing thresholds
+# Dataframe for swing thresholds using data pulled from 3 years ago 
 crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','solana'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
@@ -60,7 +60,7 @@ def generate_twilio_message(phone_number, twilio_phone_number, information):
     # Implement your fallback code
     except TwilioRestException as e:
         print(e)
-    
+
 
 if __name__ == "__main__":
     # User input phone number to variable
@@ -79,19 +79,21 @@ if __name__ == "__main__":
         daily_pct_df = daily_pct_df.T
         compare_value = np.absolute(daily_pct_df.loc[:, 'usd_24h_change'])
         if compare_value[0] >= float((swing_thresholds_df.loc[ticker][0]))*100:
-            information_to_send = f"There was a big price swing for {ticker} today compared to the last three years worth of daily changes \n"
-            print(f'Big swing {ticker} today')
+            information_to_send = f"There was a big price swing for {ticker.upper()} today compared to the last three years worth of daily changes"
             message_list.append(information_to_send)
+            #generate_twilio_message(user_phone_number, twilio_phone_number, information_to_send)
+            print(f"sent message for {ticker}: Big Swing")
         else:
-            no_big_swing = 'There was no significant price swing from yesterday compared to the last three years worth of daily changes'
+            no_big_swing = f'There was no significant price swing for {ticker.upper()} from yesterday compared to the last three years worth of daily changes'
+            message_list.append(no_big_swing)
+            #generate_twilio_message(user_phone_number, twilio_phone_number, no_big_swing)
+            print(f"sent message for {ticker}: No Swing")
             
-    # generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
-    
+    big_message_list = '\n'.join(message_list)    
+    print(message_list)
+    generate_twilio_message(user_phone_number, twilio_phone_number, big_message_list)
     print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_tickers}")
     
-
-
-
 
 
 
