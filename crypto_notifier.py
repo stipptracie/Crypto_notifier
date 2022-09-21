@@ -21,7 +21,6 @@ crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','sola
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
 
-# Define code for symbol
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -30,15 +29,23 @@ def get_symbols():
         ]).ask()
     return symbols
 
-# Define code for alpaca to get what a big swing is
-# create rest api
-# what is ave % increase threshold by comparing x time in the past generate average daily return swing
 
 # what is ave % increase threshold by comparing x time in the past generate average daily return swing
 # put user two weeks back and compare each day 
 # if day has a big swing send message 
 # if after two weeks send message no big swings
 #
+
+def get_symbols():
+    symbols = []
+    symbols = questionary.checkbox(
+        "Select CryptoCurrencies",
+        choices=["bitcoin","ethereum","ripple","cardano", "solana"]
+    ).ask()
+
+    return symbols
+
+
 
 def get_user_number():
     phone_number = []
@@ -71,7 +78,7 @@ if __name__ == "__main__":
     # User input phone number to variable
     user_phone_number = get_user_number()
     
-    # User input symbols to variable
+
     user_symbols = get_symbols()
 
     # Create conditional to pass information into message

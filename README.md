@@ -115,15 +115,15 @@ The final display will show:
 
 ## Contributors
 
-Created by Ben Spiegel, Silvano Ross and Tracy Stipp while in the UW FinTech Bootcamp
-> Contact Info:
+Created by Ben Spiegel, Silvano Ross and Tracie Stipp while in the UW FinTech Bootcamp
+> Contact Info: /n
 > email: brspiegel@gmail.com |
 > [GitHub]() |
 > [LinkedIn]()
 >
 > email: stipptracie@gmail.com |
-> [GitHub]() |
-> [LinkedIn]()
+> [GitHub](https://github.com/stipptracie) |
+> [LinkedIn](https://www.linkedin.com/in/tracie-stipp-0719691b/)
 >
 > email: silvanoross3@gmail.com |
 > [GitHub](https://github.com/silvanoross) |
