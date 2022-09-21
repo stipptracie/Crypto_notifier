@@ -2,7 +2,6 @@
 
 # Import modules
 
-
 import pandas as pd
 import os
 import numpy as np
@@ -13,22 +12,26 @@ from twilio.base.exceptions import TwilioRestException
 import numpy as np
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
 
+
 #Dataframe for swing thresholds
 crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','solana'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
-
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
-# create two week dataframe
- # Create two week df from already made data
+
+# Create two week df from already made data
 two_week_daily_pct_change_df = pd.read_csv(Path('./Resources/simdata.csv'))
 print(two_week_daily_pct_change_df)
-# generate a dictionary as well
+# generate a dictionary as for pulling date
 dictionary = two_week_daily_pct_change_df.to_dict()
-dictionary['date'][0]
-# if after two weeks send message no big swings
-#
+
+# define get symbols
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -47,7 +50,6 @@ def get_user_number():
 def get_keys_from_value(dictionary_data, value_data):
     return [k for k, v in dictionary_data.items() if v == value_data]
 
-
 # Define code for Twilio message
 # Set up twilio client
 # Create twilio id and tolken for use in sdk
@@ -61,12 +63,11 @@ client = Client(twilio_account_id, twilio_token)
 # Define generate twilio message
 def generate_twilio_message(phone_number, twilio_phone_number, information):
     try:
-        message = client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
+        client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
                                     body=information)
     # Implement your fallback code
     except TwilioRestException as e:
         print(e)
-    return message
 
 if __name__ == "__main__":
     # User input phone number to variable
@@ -89,11 +90,8 @@ if __name__ == "__main__":
                     res = int("".join(s))
                     # pull date from dictionary key value 
                     date = dictionary['date'][res]
-                    print(dictionary['date'][res])
-                    
-                    # print(dictionary['date'][get_keys_from_value(dictionary[symbol], value)])
+                            
                     information_to_send = f"BIG SWING {symbol} on {date}\n"
-                    print(information_to_send)
                     message_list.append(information_to_send)
                     
                 else: 
@@ -106,4 +104,4 @@ if __name__ == "__main__":
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
     print(f"A message has been sent to {user_phone_number} with a two week summary report for {user_symbols}")
-    
+   

@@ -2,16 +2,16 @@
 
 # Import modules
 
-from email import message
+
 import pandas as pd
 import os
-import json
-import requests
 import numpy as np
 from pycoingecko import CoinGeckoAPI
 import questionary
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
+import numpy as np
+from pathlib import Path
 
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
@@ -22,9 +22,13 @@ crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','sola
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
 # create two week dataframe
  # Create two week df from already made data
-two_week_daily_pct_change_df = pd.read_csv('./Resources/simdata.csv')
-# if after two weeks send message no big swings
-#
+two_week_daily_pct_change_df = pd.read_csv(Path('./Resources/simdata.csv'))
+print(two_week_daily_pct_change_df)
+
+# generate a dictionary as well for use when pulling dates
+dictionary = two_week_daily_pct_change_df.to_dict()
+
+
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -39,6 +43,10 @@ def get_user_number():
     phone_number = questionary.text("What is your phone number?:").ask()
     return phone_number
 
+# define dictionary get keys from values funciton
+def get_keys_from_value(dictionary_data, value_data):
+    # returns a list value
+    return [k for k, v in dictionary_data.items() if v == value_data]
 
 
 # Define code for Twilio message
@@ -66,17 +74,29 @@ if __name__ == "__main__":
     user_phone_number = get_user_number()
     
     # User input symbols to variable
-    user_symbols = ["bitcoin", "ethereum", "cardano", "ripple", "solana"]
-    #get_symbols()
+    user_symbols = get_symbols()
     
     message_list = []
     
     for symbol in user_symbols:
-            for row in two_week_daily_pct_change_df.loc[:, symbol]:
-                if float(row) >= float(swing_thresholds_df.loc[symbol]):
-                    information_to_send = f"BIG SWING {symbol} \n"
+            for value in two_week_daily_pct_change_df[symbol]:
+                print(value)
+                if np.absolute(float(value)) >= float(swing_thresholds_df.loc[symbol]):
+                    # change df to dictionary and call the date
+                    indexer = get_keys_from_value(dictionary[symbol], value)
+                    print(indexer)
+                    s = [str(i) for i in indexer]
+                    # Join list items using join()
+                    res = int("".join(s))
+                    
+                    # pull date from dictionary key value for date 
+                    date = dictionary['date'][res]
+                    print(dictionary['date'][res])
+                               
+                    information_to_send = f"BIG SWING {symbol} on {date}\n"
+                    print(information_to_send)
                     message_list.append(information_to_send)
-                    print(message_list)
+                    
                 else: 
                     no_swing = f"no swing {symbol}"
                     message_list.append(no_swing)        
@@ -84,16 +104,7 @@ if __name__ == "__main__":
     # Generate message with list of strings
     message_list = '. '.join(message_list)
     print(message_list)
-    #generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
+    generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
-    print(f"A message has been sent to you phone with a two week summary report for {user_symbols}")
+    print(f"A message has been sent to {user_phone_number} with a two week summary report for {user_symbols}")
     
-
-
-
-
-
-
-
-
-
