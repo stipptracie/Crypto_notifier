@@ -2,6 +2,7 @@
 
 # Import modules
 
+from email import message
 import pandas as pd
 import os
 import json
@@ -16,30 +17,27 @@ from twilio.base.exceptions import TwilioRestException
 cg = CoinGeckoAPI()
 
 #Dataframe for swing thresholds
-crypto_swing_thresholds = {'Coin':['BTC','ETH','XRP','ADA','SOL'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
+crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','solana'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
-
-#two_week_daily_pct_change_df = # @TODO #
-
-# what is ave % increase threshold by comparing x time in the past generate average daily return swing
-# put user two weeks back and compare each day 
-# if day has a big swing send message 
+# create two week dataframe
+ # Create two week df from already made data
+two_week_daily_pct_change_df = pd.read_csv('./Resources/simdata.csv')
 # if after two weeks send message no big swings
 #
-def get_tickers():
-    tickers = []
-    tickers = questionary.checkbox(
+def get_symbols():
+    symbols = []
+    symbols = questionary.checkbox(
         "Select CryptoCurrencies",
-        choices=["BTC","ETH","XRP","ADA", "SOL"]
+        choices=["bitcoin", "ethereum", "cardano", "ripple", "solana"]
     ).ask()
-return tickers
+    return symbols
 
 
 def get_user_number():
     phone_number = []
     phone_number = questionary.text("What is your phone number?:").ask()
-return phone_number
+    return phone_number
 
 
 
@@ -67,40 +65,28 @@ if __name__ == "__main__":
     # User input phone number to variable
     user_phone_number = get_user_number()
     
-    # User input tickers to variable
-    user_tickers = get_tickers()
+    # User input symbols to variable
+    user_symbols = ["bitcoin", "ethereum", "cardano", "ripple", "solana"]
+    #get_symbols()
     
-    # Generate threshold df
-    for ticker in user_tickers:
-        # run through coingecko to generate concatenated df of threshold values
-        swing_thresholds_df = # @TODO #
-
-    # Generate df for each ticker for the last two weeks
-    for ticker in user_tickers:
-        two_week_daily_pct_change_df = # @TODO #
-
-    # Create conditional to pass information into message
-    # Will need two dataframes, one with last two weeks of daily percent changes
-    # Dataframe for comparing 
-    # create empty list of strings to house text message
-    # could create a dictionary for each day in the last two weeks day: ticker, true/false and use 
-    # if dictionary[1] == True:
-    #   message_list.append(day, ticker)
     message_list = []
     
-    for row in two_week_daily_pct_change_df:
-            for symbol in user_tickers:
-                if float(row[symbol]) >= float(swing_thresholds_df[symbol]):
-                    information_to_send = f"There was a big price swing on {row.index} for {symbol} \n"
+    for symbol in user_symbols:
+            for row in two_week_daily_pct_change_df.loc[:, symbol]:
+                if float(row) >= float(swing_thresholds_df.loc[symbol]):
+                    information_to_send = f"BIG SWING {symbol} \n"
                     message_list.append(information_to_send)
+                    print(message_list)
                 else: 
-                    no_swing = f"There was no big price changes for {symbol} in the last two weeks"
+                    no_swing = f"no swing {symbol}"
                     message_list.append(no_swing)        
     
     # Generate message with list of strings
-    generate_twilio_message(phone_number, twilio_phone_number, message_list)
+    message_list = '. '.join(message_list)
+    print(message_list)
+    #generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
-    print(f"A message has been sent to you phone with a two week summary report for {user_tickers}")
+    print(f"A message has been sent to you phone with a two week summary report for {user_symbols}")
     
 
 
