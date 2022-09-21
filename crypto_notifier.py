@@ -21,8 +21,6 @@ crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','sola
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
 
-
-# Define code for ticker
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -37,6 +35,7 @@ def get_symbols():
 # if day has a big swing send message 
 # if after two weeks send message no big swings
 #
+
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -45,6 +44,7 @@ def get_symbols():
     ).ask()
 
     return symbols
+
 
 
 def get_user_number():
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # User input phone number to variable
     user_phone_number = get_user_number()
     
-    # User input tickers to variable
+
     user_symbols = get_symbols()
 
     # Create conditional to pass information into message
@@ -96,7 +96,8 @@ if __name__ == "__main__":
         else:
             no_big_swing = f'There was no significant price swing for {symbol} from yesterday compared to the last three years worth of daily changes'
             message_list.append(no_big_swing)
-            
+    
+    message_list = ". ".join(message_list)       
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
     print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_symbols}")
