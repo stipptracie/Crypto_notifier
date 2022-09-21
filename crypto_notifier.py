@@ -96,7 +96,7 @@ if __name__ == "__main__":
         else:
             no_big_swing = f'There was no significant price swing for {symbol} from yesterday compared to the last three years worth of daily changes'
             message_list.append(no_big_swing)
-            
+    message_list = ". ".join(message_list)               
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
     print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_symbols}")
