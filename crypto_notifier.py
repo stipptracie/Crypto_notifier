@@ -21,11 +21,7 @@ crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','sola
 
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
 
-<<<<<<< HEAD
-#two_week_daily_pct_change_df = # @TODO #
-
-<<<<<<< HEAD
-# Define code for ticker
+# Define code for symbol
 def get_symbols():
     symbols = []
     symbols = questionary.checkbox(
@@ -37,27 +33,12 @@ def get_symbols():
 # Define code for alpaca to get what a big swing is
 # create rest api
 # what is ave % increase threshold by comparing x time in the past generate average daily return swing
-=======
-=======
->>>>>>> 21e66b9d7cc995a8c259780b55b810548c7bb522
+
 # what is ave % increase threshold by comparing x time in the past generate average daily return swing
 # put user two weeks back and compare each day 
 # if day has a big swing send message 
 # if after two weeks send message no big swings
 #
-def get_tickers():
-    tickers = []
-    tickers = questionary.checkbox(
-        "Select CryptoCurrencies",
-        choices=["bitcoin","ethereum","ripple","cardano", "solana"]
-    ).ask()
-<<<<<<< HEAD
-return tickers
->>>>>>> 3bad08162160f8db09477e290193ba5271a91537
-=======
-    return tickers
->>>>>>> 21e66b9d7cc995a8c259780b55b810548c7bb522
-
 
 def get_user_number():
     phone_number = []
@@ -90,28 +71,29 @@ if __name__ == "__main__":
     # User input phone number to variable
     user_phone_number = get_user_number()
     
-    # User input tickers to variable
-    user_tickers = get_tickers()
+    # User input symbols to variable
+    user_symbols = get_symbols()
 
     # Create conditional to pass information into message
     # Create empty message list to house information
     message_list = []
     
-    for ticker in user_tickers:   
-        daily_pct = cg.get_price(ids=f'{ticker}', vs_currencies='usd',include_24hr_change='true')
+    for symbol in user_symbols:   
+        daily_pct = cg.get_price(ids=f'{symbol}', vs_currencies='usd',include_24hr_change='true')
         daily_pct_df = pd.DataFrame(daily_pct)
         daily_pct_df = daily_pct_df.T
         compare_value = np.absolute(daily_pct_df.loc[:, 'usd_24h_change'])
-        if compare_value[0] >= float((swing_thresholds_df.loc[ticker][0]))*100:
-            information_to_send = f"There was a big price swing for {ticker} today compared to the last three years worth of daily changes \n"
+        if compare_value[0] >= float((swing_thresholds_df.loc[symbol][0]))*100:
+            information_to_send = f"There was a big price swing for {symbol} today compared to the last three years worth of daily changes \n"
             message_list.append(information_to_send)
         else:
-            no_big_swing = f'There was no significant price swing for {ticker} from yesterday compared to the last three years worth of daily changes'
+            no_big_swing = f'There was no significant price swing for {symbol} from yesterday compared to the last three years worth of daily changes'
             message_list.append(no_big_swing)
-            
+    
+    message_list = ". ".join(message_list)       
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
-    print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_tickers}")
+    print(f"A message has been sent to your phone {user_phone_number} with a two week summary report for {user_symbols}")
     
 
     
