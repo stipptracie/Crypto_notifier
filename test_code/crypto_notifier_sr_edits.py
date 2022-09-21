@@ -87,7 +87,7 @@ if __name__ == "__main__":
                     s = [str(i) for i in indexer]
                     # Join list items using join()
                     res = int("".join(s))
-                    
+                    # pull date from dictionary key value 
                     date = dictionary['date'][res]
                     print(dictionary['date'][res])
                     
