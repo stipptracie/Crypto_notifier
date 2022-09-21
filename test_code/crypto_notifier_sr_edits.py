@@ -12,22 +12,34 @@ from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 import numpy as np
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
 
+
 #Dataframe for swing thresholds
 crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','solana'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
 
+#Dataframe for swing thresholds
+crypto_swing_thresholds = {'Coin':['bitcoin','ethereum','ripple','cardano','solana'],'pct_change_Threshold':[0.029452,0.038992,0.044968,0.045519,0.057073]}
 swing_thresholds_df = pd.DataFrame(crypto_swing_thresholds).set_index('Coin')
-# create two week dataframe
- # Create two week df from already made data
+
+# Create two week df from already made data
 two_week_daily_pct_change_df = pd.read_csv(Path('./Resources/simdata.csv'))
-print(two_week_daily_pct_change_df)
+
 
 # generate a dictionary as well for use when pulling dates
 dictionary = two_week_daily_pct_change_df.to_dict()
 
+# Create two week df from already made data in simdata.csv file
+two_week_daily_pct_change_df = pd.read_csv(Path('./Resources/simdata.csv'))
+
+# generate a dictionary as for pulling date
+dictionary = two_week_daily_pct_change_df.to_dict()
 
 def get_symbols():
     symbols = []
@@ -84,27 +96,26 @@ if __name__ == "__main__":
                 if np.absolute(float(value)) >= float(swing_thresholds_df.loc[symbol]):
                     # change df to dictionary and call the date
                     indexer = get_keys_from_value(dictionary[symbol], value)
-                    print(indexer)
+                    # pull string from list
                     s = [str(i) for i in indexer]
                     # Join list items using join()
                     res = int("".join(s))
                     
                     # pull date from dictionary key value for date 
                     date = dictionary['date'][res]
-                    print(dictionary['date'][res])
-                               
+                                                 
                     information_to_send = f"BIG SWING {symbol} on {date}\n"
                     print(information_to_send)
-                    message_list.append(information_to_send)
-                    
+                            
+                    information_to_send = f"BIG SWING {symbol} on {date}\n"
+                    message_list.append(information_to_send)                    
                 else: 
                     no_swing = f"no swing {symbol}"
                     message_list.append(no_swing)        
     
     # Generate message with list of strings
     message_list = '. '.join(message_list)
-    print(message_list)
+    
     generate_twilio_message(user_phone_number, twilio_phone_number, message_list)
     
     print(f"A message has been sent to {user_phone_number} with a two week summary report for {user_symbols}")
-    

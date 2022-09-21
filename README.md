@@ -118,8 +118,8 @@ The final display will show:
 Created by Ben Spiegel, Silvano Ross and Tracie Stipp while in the UW FinTech Bootcamp
 > Contact Info: /n
 > email: brspiegel@gmail.com |
-> [GitHub]() |
-> [LinkedIn]()
+> [GitHub](https://github.com/brspiegel) |
+> [LinkedIn](https://www.linkedin.com/in/ben-spiegel-36753476/)
 >
 > email: stipptracie@gmail.com |
 > [GitHub](https://github.com/stipptracie) |
