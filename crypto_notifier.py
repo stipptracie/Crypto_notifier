@@ -98,7 +98,18 @@ if __name__ == "__main__":
                     message_list.append(information_to_send)
                     
                 else: 
-                    no_swing = f"no swing {symbol}"
+                    # change df to dictionary and call the date
+                    indexer = get_keys_from_value(dictionary[symbol], value)
+                    print(indexer)
+                    s = [str(i) for i in indexer]
+                    # Join list items using join()
+                    res = int("".join(s))
+                    
+                    # pull date from dictionary key value for date 
+                    date = dictionary['date'][res]
+                    print(dictionary['date'][res])
+                               
+                    no_swing = f"no swing {symbol} on {date}"
                     message_list.append(no_swing)        
     
     # Generate message with list of strings
