@@ -62,12 +62,12 @@ client = Client(twilio_account_id, twilio_token)
 # Define generate twilio message
 def generate_twilio_message(phone_number, twilio_phone_number, information):
     try:
-        message = client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
+        client.messages.create(to=f"+1{phone_number}", from_=f"+1{twilio_phone_number}",
                                     body=information)
     # Implement your fallback code
     except TwilioRestException as e:
         print(e)
-    return message
+    
 
 if __name__ == "__main__":
     # User input phone number to variable
