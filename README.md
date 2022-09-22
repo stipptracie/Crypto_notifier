@@ -91,8 +91,12 @@ To run the application first activate the conda environment associated with the 
 ```python
     conda activate myenv
     cd Crypto_notifer
-    python crypto_notifer.py
+    code .
 ```
+
+It is advised to run this application in VS Code or another IDE as running it through the command line has shown to give issues with recognizing the environment variables.
+
+One the program is running:
 
 This will prompt the user to enter their 10 digit phone number:
 
@@ -106,14 +110,29 @@ To select multiple cryptocurrencies for analysis the user must use the SPACE bar
 
 The final display will show:
 
-[message_sent](images/message_sent.png)
+![message_sent](images/message_sent.png)
 
+You should receive a text message like the following:
+
+![text_message](images/text_message.png)
 
 ---
 
 ## Highlights:
 
 ### Data Analysis
+
+First we called the data for each individual cyrptocurrency: below is an example for one symbol.
+
+![ripple](images/ripple_analysis.png)
+
+Next we gathered the pct change and then took the absolute value to reflect the magnitude of the change:
+
+![ripple_mag](images/ripple_pct_change.png)
+
+Finally we put all of the values in a combined dataframe for referencing during our comparisons:
+
+![final](images/final_data_threshold.png)
 
 
 
@@ -122,7 +141,8 @@ The final display will show:
 ## Contributors
 
 Created by Ben Spiegel, Silvano Ross and Tracie Stipp while in the UW FinTech Bootcamp
-> Contact Info: /n
+> Contact Info:
+>
 > email: brspiegel@gmail.com |
 > [GitHub](https://github.com/brspiegel) |
 > [LinkedIn](https://www.linkedin.com/in/ben-spiegel-36753476/)
