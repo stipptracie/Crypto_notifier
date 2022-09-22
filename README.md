@@ -106,10 +106,16 @@ To select multiple cryptocurrencies for analysis the user must use the SPACE bar
 
 The final display will show:
 
+[message_sent](images/message_sent.png)
+
 
 ---
 
 ## Highlights:
+
+### Data Analysis
+
+
 
 ---
 

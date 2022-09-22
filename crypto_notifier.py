@@ -12,6 +12,11 @@ from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 import numpy as np
 from pathlib import Path
+from dotenv import load_dotenv
+
+
+load_dotenv
+
 
 # Set Variable for coingecko API
 cg = CoinGeckoAPI()
