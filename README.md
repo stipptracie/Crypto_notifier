@@ -77,6 +77,10 @@ Prior to running the application it is necessary to create a Twilio Account. Sig
 
 There are 3 important pieces of information that need to be retrieved: the Twilio phone number associated with your account, the Twilio account ID and the Twilio authentication token.
 
+You can find this informatin on the main console page of your twilio account:
+
+![twilio](images/twilio_info.png)
+
 These peices of information need to be stored in a **.env** file that is saved in the same repo as this application. The information needs to look like the following:
 > "TWILIO_ACCOUNT_ID" = 'YOUR ACCOUNT ID HERE'
 
@@ -91,8 +95,12 @@ To run the application first activate the conda environment associated with the 
 ```python
     conda activate myenv
     cd Crypto_notifer
-    python crypto_notifer.py
+    code .
 ```
+
+It is advised to run this application in VS Code or another IDE as running it through the command line has shown to give issues with recognizing the environment variables.
+
+One the program is running:
 
 This will prompt the user to enter their 10 digit phone number:
 
@@ -106,8 +114,11 @@ To select multiple cryptocurrencies for analysis the user must use the SPACE bar
 
 The final display will show:
 
-[message_sent](images/message_sent.png)
+![message_sent](images/message_sent.png)
 
+You should receive a text message like the following:
+
+![text_message](images/text_message.png)
 
 ---
 
@@ -115,6 +126,25 @@ The final display will show:
 
 ### Data Analysis
 
+First we called the data for each individual cyrptocurrency: below is an example for one symbol.
+
+![ripple](images/ripple_analysis.png)
+
+Next we gathered the pct change and then took the absolute value to reflect the magnitude of the change:
+
+![ripple_mag](images/ripple_pct_change.png)
+
+Finally we put all of the values in a combined dataframe for referencing during our comparisons:
+
+![final](images/final_data_threshold.png)
+
+The final thing we had to do was create a concatenated dataframe with two weeks of the most recent cryptocurrency data for the list given to the user. Then we had to compare each day's price against the threshold that we made. This looks like the following:
+
+![2_week](images/2_week_pct_change.png)
+
+This was a complicated conditional logic feat which was accomplished by looping through the symbols in the list. then looping through each day in the two week percent change data frame indexed on the symbol. Then comparing the two and pulling the symbols date and value into a list of messages to be sent to the user using twilio. This is displayed as the following: 
+
+![conditional](images/conditional_logic.png)
 
 
 ---
@@ -122,7 +152,8 @@ The final display will show:
 ## Contributors
 
 Created by Ben Spiegel, Silvano Ross and Tracie Stipp while in the UW FinTech Bootcamp
-> Contact Info: /n
+> Contact Info:
+>
 > email: brspiegel@gmail.com |
 > [GitHub](https://github.com/brspiegel) |
 > [LinkedIn](https://www.linkedin.com/in/ben-spiegel-36753476/)
