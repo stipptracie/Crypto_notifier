@@ -136,6 +136,10 @@ Next we gathered the pct change and then took the absolute value to reflect the 
 
 ![ripple_mag](images/ripple_pct_change.png)
 
+Then we calculated the mean of pct change over the entire 18 months.  This is the threshold for each coin.
+
+![ripple_threshold](images/ripple_threshold.png)
+
 Finally we put all of the values in a combined dataframe for referencing during our comparisons:
 
 ![final](images/final_data_threshold.png)
