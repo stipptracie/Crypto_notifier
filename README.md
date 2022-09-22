@@ -77,6 +77,10 @@ Prior to running the application it is necessary to create a Twilio Account. Sig
 
 There are 3 important pieces of information that need to be retrieved: the Twilio phone number associated with your account, the Twilio account ID and the Twilio authentication token.
 
+You can find this informatin on the main console page of your twilio account:
+
+![twilio](images/twilio_info.png)
+
 These peices of information need to be stored in a **.env** file that is saved in the same repo as this application. The information needs to look like the following:
 > "TWILIO_ACCOUNT_ID" = 'YOUR ACCOUNT ID HERE'
 
@@ -134,6 +138,13 @@ Finally we put all of the values in a combined dataframe for referencing during 
 
 ![final](images/final_data_threshold.png)
 
+The final thing we had to do was create a concatenated dataframe with two weeks of the most recent cryptocurrency data for the list given to the user. Then we had to compare each day's price against the threshold that we made. This looks like the following:
+
+![2_week](images/2_week_pct_change.png)
+
+This was a complicated conditional logic feat which was accomplished by looping through the symbols in the list. then looping through each day in the two week percent change data frame indexed on the symbol. Then comparing the two and pulling the symbols date and value into a list of messages to be sent to the user using twilio. This is displayed as the following: 
+
+![conditional](images/conditional_logic.png)
 
 
 ---
