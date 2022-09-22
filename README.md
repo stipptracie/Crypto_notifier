@@ -2,6 +2,8 @@
 
 [Planning doc](https://docs.google.com/document/d/1rUZfldYmy9Eqa9YMD0Sh2NcjxjiFe94NhCzngBFl1-c/edit)
 
+[Google Slides Presentation](https://docs.google.com/presentation/d/1Q2ZRGA01SbQB4v1tawb9DYXGLw8sZ-zitMHMYtC8o_U/edit#slide=id.g15b07a4b0c1_0_0)
+
 The goal of this application is to allow deliver a comparison for user-chosen cryptocurrencies through a text message using the Twilio software package. The comparison is taking the historical return values of the currencies chosen and creating a threshold value which is used to compare daily return values of recent times. 
 
 
